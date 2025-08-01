@@ -7,7 +7,7 @@
 void use_readonly() {
     /// Initialize the pool of which we will get readonly handlers
     /// This does not return a reference to a pool, the readonly pool
-    /// is a global endevour
+    /// is a global endeavor
     init_readonly_pool();
 
     Readonly readonly_handler = make_readonly(ACStr("Hello, World!"));
