@@ -32,10 +32,10 @@ typedef struct {
 } AggressiveStrategy;
 
 /// If we're aggressive, we always charge at the enemy
-override_strategy(AggressiveStrategy, self) {
+override_strategy(AggressiveStrategy, self)
     c_println("[AGGRESSIVE] Charging at the enemy!");
     return ok_result(ACStr("Attacked aggressively"));
-} end_override_strategy
+end_override_strategy
 
 typedef struct {
     inherit_strategy
@@ -44,7 +44,7 @@ typedef struct {
 
 /// If we're defensive, we check if we have less than health 50 remaining and heal,
 /// otherwise, we hold our position!
-override_strategy(DefensiveStrategy, self) {
+override_strategy(DefensiveStrategy, self)
     if (self->state->health < 50) {
         c_println("[DEFENSIVE] Healing self...");
 
@@ -54,7 +54,7 @@ override_strategy(DefensiveStrategy, self) {
     c_println("[DEFENSIVE] Holding position...");
 
     return ok_result(ACStr("Guarding"));
-} end_override_strategy
+end_override_strategy
 
 typedef struct {
     inherit_strategy
@@ -63,7 +63,7 @@ typedef struct {
 } RandomStrategy;
 
 /// Our random strategy is to choose a move at random!
-override_strategy(RandomStrategy, self) {
+override_strategy(RandomStrategy, self)
     int choice = rand() % 2;
     if (choice == 0) {
         c_println("[RANDOM] Surprise attack!");
@@ -72,7 +72,7 @@ override_strategy(RandomStrategy, self) {
         c_println("[RANDOM] Taking cover.");
         return ok_result(ACStr("Random defense"));
     }
-} end_override_strategy
+end_override_strategy
 
 void use_strategies() {
     srand((unsigned int)time(NULL));
