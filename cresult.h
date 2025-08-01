@@ -29,8 +29,8 @@ typedef enum {
 
 /// Represents a tagged union result which can be either Ok (with a value) or Err (with an error message).
 typedef struct {
-    ResultTag tag;          ///< Ok or Err
-    c_fmt_FormatArg value;  ///< Success value or error message
+    ResultTag tag;
+    c_fmt_FormatArg value;
 } Result;
 
 /// Constructs a Result tagged as Ok with a value.

@@ -24,4 +24,15 @@ add_executable(CFmt main.c
         a_cvector.h
         cstrat.h
         cstrat.c
+        examples/cfmt_ex.c
+        examples/cvector_ex.c
+        examples/citerator_ex.c
+        examples/coptional_ex.c
+        examples/cresult.c
+        examples/cstring_ex.c
+        examples/cstrat_ex.c
+        examples/cdefer_ex.c
+        examples/cexcept_ex.c
+        examples/chash_exec.c
+        examples/creadonly_ex.c
 )
