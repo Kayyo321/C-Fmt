@@ -1,10 +1,7 @@
-#include "coptional.h"
+#include "cfmt.h"
 
 int main(void) {
-    Optional x = opt_none; //opt_some(ADouble(10.0));
-    with_some(x, a_double,
-        c_println("{}", a_double);
-    )
+    c_println("Hello, World!");
 
     return EXIT_SUCCESS;
 }

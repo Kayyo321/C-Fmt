@@ -36,6 +36,7 @@ typedef enum {
     Unique = 'z',
 } c_fmt_VariadicType;
 
+/// Represents a tagged union of supported format argument values.
 typedef union {
     CVector vec_val;
     String *string_val;
@@ -55,14 +56,17 @@ typedef union {
     void *ptr_val;
 } c_fmt_Any;
 
+/// Global config for how many max bytes can be written into a format buffer.
 extern unsigned long c_fmt_MaxBytesWritten;
 
+/// Represents a single argument to a format call, including its type and optional custom tag (used for Unique).
 typedef struct {
     c_fmt_VariadicType type;
     c_fmt_Any value;
     const char *opt_tag;
 } c_fmt_FormatArg;
 
+/// Returns true if two c_fmt_Any values are equal (used for testing or comparisons).
 bool any_equal(const c_fmt_Any a, const c_fmt_Any b);
 
 /// takes a format string and replaces all placeholders with it's variadic counterpart

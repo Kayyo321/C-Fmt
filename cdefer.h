@@ -7,7 +7,8 @@
 #define CONCAT_(x, y) x##y
 #define CONCAT(x, y) CONCAT_(x, y)
 
-// The actual defer macro
+/// Applies the `cleanup(func)` attribute to a variable declaration.
+/// The provided `func` must take a pointer to the variable type, i.e., `T*`.
 #define defer(func) \
 __attribute__((cleanup(func))) __attribute__((unused))
 

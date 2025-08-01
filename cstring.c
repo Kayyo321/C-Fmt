@@ -4,6 +4,7 @@
 
 #include "cstring.h"
 
+#include <string.h>
 #include <ctype.h>
 
 const String null_string = {.data = NULL, .length = 0, .capacity = 0};

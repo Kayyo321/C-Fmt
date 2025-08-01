@@ -9,6 +9,20 @@
 
 #include "cfmt.h"
 
+/**
+ * @brief Represents the context of an exception within a program.
+ *
+ * This structure is used for managing exception handling, providing
+ * essential information regarding the current program state during the
+ * exception and allowing for proper error handling and recovery.
+ *
+ * The structure includes a `jmp_buf` for storing the program's execution
+ * state, a `c_fmt_FormatArg` for representing the value associated with
+ * the exception, and a pointer to the previous `ExceptionContext` in case
+ * of nested exception contexts.
+ *
+ * @struct _ExceptionContext
+ */
 typedef struct _ExceptionContext {
     jmp_buf env;
     c_fmt_FormatArg value;

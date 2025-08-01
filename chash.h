@@ -8,36 +8,42 @@
 #include <stdlib.h>
 #include <string.h>
 
+/// Simple hash function for integers.
 static inline unsigned hash_int(const int* x) {
     return (unsigned)(*x);
 }
 
+/// Equality function for integers.
 static inline int eq_int(const int* a, const int* b) {
     return *a == *b;
 }
 
+/// Hash function for null-terminated C strings (uses djb2).
 static inline unsigned hash_str(const char** s) {
     unsigned h = 5381;
     for (const char* p = *s; *p; p++) h = ((h << 5) + h) + *p;
     return h;
 }
 
+/// Equality function for null-terminated C strings.
 static inline int eq_str(const char** a, const char** b) {
     return strcmp(*a, *b) == 0;
 }
 
+/// Declares a new hashmap type with a specified name, key type, and value type.
+/// Also declares init, free, set, get, and has functions.
 #define declare_hashmap(MapTypeName, K, V) \
 typedef struct MapTypeName##_entry { \
-unsigned hash; \
-K key; \
-V value; \
-struct MapTypeName##_entry* next; \
+    unsigned hash;       /* hash of the key */ \
+    K key;               /* key of the entry */ \
+    V value;             /* value of the entry */ \
+    struct MapTypeName##_entry* next; /* next entry in the bucket (for chaining) */ \
 } MapTypeName##_entry; \
 \
 typedef struct { \
-MapTypeName##_entry** buckets; \
-size_t capacity; \
-size_t size; \
+    MapTypeName##_entry** buckets; /* array of bucket pointers */ \
+    size_t capacity;               /* number of buckets */ \
+    size_t size;                   /* number of key-value pairs */ \
 } MapTypeName; \
 \
 void MapTypeName##_init(MapTypeName* map); \
@@ -46,6 +52,8 @@ int MapTypeName##_set(MapTypeName* map, K key, V value); \
 int MapTypeName##_get(MapTypeName* map, K key, V* out); \
 int MapTypeName##_has(MapTypeName* map, K key);
 
+/// Defines the implementation for a hashmap declared via `declare_hashmap`.
+/// Requires a hash function and equality function for the key type.
 #define define_hashmap(MapTypeName, K, V, hash_fn, eq_fn) \
 void MapTypeName##_init(MapTypeName* map) { \
     map->capacity = 16; \
@@ -121,6 +129,7 @@ int MapTypeName##_has(MapTypeName* map, K key) { \
     return 0; \
 } \
 \
+/* Resizes the hashmap when a load factor exceeds 0.66 */ \
 static void MapTypeName##_resize(MapTypeName* map) { \
     size_t new_cap = map->capacity * 2; \
     MapTypeName##_entry** new_buckets = calloc(new_cap, sizeof(*new_buckets)); \

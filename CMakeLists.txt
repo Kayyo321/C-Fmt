@@ -23,5 +23,5 @@ add_executable(CFmt main.c
         a_string.h
         a_cvector.h
         cstrat.h
-        c_strat.c
+        cstrat.c
 )
