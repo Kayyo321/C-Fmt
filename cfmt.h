@@ -66,6 +66,9 @@ typedef struct {
     const char *opt_tag;
 } c_fmt_FormatArg;
 
+/// Renamed for ease of use later on
+typedef c_fmt_FormatArg FormatAny;
+
 /// Returns true if two c_fmt_Any values are equal (used for testing or comparisons).
 bool any_equal(const c_fmt_Any a, const c_fmt_Any b);
 
@@ -100,6 +103,17 @@ bool cstrings_equal(const char *a, const char *b);
 #define AULongLong(ull) (c_fmt_FormatArg){ ULong,  .value.u_long_long_val = (ull) }
 #define APtr(p)    (c_fmt_FormatArg){ Ptr,    .value.ptr_val = (p) }
 #define AUnique(u, tag) (c_fmt_FormatArg){ Unique, .value.ptr_val = (u), .opt_tag = (tag) }
+
+#define with_unique_tag(val, tag, ...) \
+    do { \
+    if (cstrings_equal(tag, val.opt_tag)) { \
+        __VA_ARGS__\
+    } \
+    } \
+    while (0);
+
+#define unique_as(val, type) \
+    (type)(val.value.ptr_val)
 
 #define c_format(format, ...) \
     c_fmt_Format(format, (c_fmt_FormatArg[]){ __VA_ARGS__ }, sizeof((c_fmt_FormatArg[]){ __VA_ARGS__ }) / sizeof(c_fmt_FormatArg))
